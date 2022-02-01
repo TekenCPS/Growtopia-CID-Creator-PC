@@ -38,7 +38,7 @@ int main() {
 	Gmail_acc = em;
 	
         bot.SERVER_HOST = "213.179.209.168";
-        bot.SERVER_PORT = 17246;
+        bot.SERVER_PORT = 17250;
 
 	bot.userInit();
 	bots.push_back(bot);
