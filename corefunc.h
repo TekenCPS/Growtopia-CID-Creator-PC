@@ -20,11 +20,27 @@ typedef unsigned long dword;
 using namespace std;
 using json = nlohmann::json;
 
+const int MAX = 26;
+
+string randstring(int n)
+{
+    char alphabet[MAX] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                          'o', 'p', 'q', 'r', 's', 't', 'u',
+                          'v', 'w', 'x', 'y', 'z' };
+ 
+    string res = "";
+    for (int i = 0; i < n; i++)
+        res = res + alphabet[rand() % MAX];
+     
+    return res;
+}
+
 #pragma once
-string Growid_acc = "upybomberpros";
-string Password_acc = "Upydabest123.";
-string Gmail_acc = "upydababyprook";
-string gameVersion = "4.25";
+string Growid_acc = "";
+string Password_acc = "PassTest666!";
+string Gmail_acc = "coolyocool";
+string gameVersion = "3.80";
 int START_ACC = 1;
 int START_GMAIL = 1;
 
@@ -245,18 +261,21 @@ public:
 	    			if (ctx.find("add_label_with_icon|big|`wAre you Human?``|left|206|") != std::string::npos) fixCaptcha(ctx);
 	    		}
 	    		else if (func == "OnDialogRequest") {
+				srand(time(NULL));
+				int n = 3;
+				Growid_acc = randstring(n);
 	    			auto ctx = varlist[1].get_string();
 	    			if (ctx.find("add_label_with_icon|big|`wAre you Human?``|left|206|") != std::string::npos) fixCaptcha(ctx);
 					if (ctx.find("add_label_with_icon|big|`wGet a GrowID``|left|206|") != std::string::npos) {
-						SendPacket(2, "action|dialog_return\ndialog_name|growid_apply\nlogon|" + Growid_acc + to_string(START_ACC) + "\npassword|" + Password_acc + "\npassword_verify|" + Password_acc + "\nemail|" + Gmail_acc + to_string(START_GMAIL) + "@gmail.com", peer);
+						SendPacket(2, "action|dialog_return\ndialog_name|growid_apply\nlogon|" + Growid_acc + "\npassword|" + Password_acc + "\npassword_verify|" + Password_acc + "\nemail|" + Gmail_acc + to_string(START_GMAIL) + "@gmail.com", peer);
 						START_ACC = START_ACC + 1;
 						START_GMAIL = START_GMAIL + 1;
 					}
 	    			else if (ctx.find("add_label_with_icon|big|`wGrowID GET!``|left|206|") != std::string::npos) {
 						string growid = explode("`` created.  Write it and your password", explode("add_textbox|A `wGrowID`` with the log on of `w", ctx)[1])[0];
 						string passwr = "" + Password_acc;
-						cout << "Account succesfully created! GrowID: " << growid << ",Password: " << Password_acc << ",Gmail: " << Gmail_acc + to_string(START_GMAIL -1) << "@gmail.com" << endl;
-						appendAcc("User: " + growid + ",Password: " + Password_acc + ",Gmail: " + Gmail_acc + to_string(START_GMAIL -1) + "@gmail.com");
+						cout << "Account succesfully created! GrowID: " << Growid_acc << ",Password: " << Password_acc << ",Gmail: " << Gmail_acc + to_string(START_GMAIL -1) << "@gmail.com" << endl;
+						appendAcc("User: " + Growid_acc + ",Password: " + Password_acc + ",Gmail: " + Gmail_acc + to_string(START_GMAIL -1) + "@gmail.com");
 						enet_peer_disconnect_later(peer, 0);
 					}
 	    		}
